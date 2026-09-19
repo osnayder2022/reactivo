@@ -2,11 +2,13 @@ package com.oconde.reactivo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import reactor.core.publisher.Hooks;
 
 @SpringBootApplication
 public class ReactivoApplication {
 
 	public static void main(String[] args) {
+		Hooks.enableAutomaticContextPropagation();
 		SpringApplication.run(ReactivoApplication.class, args);
 	}
 

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- Incluir los patrones estándar de Spring Boot -->
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+    <!-- 1. Mantienes el ConsoleAppender tal como lo tienes (Sincrónico) -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!-- Incluimos traceId e idPeticion desde el MDC -->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - [traceId=%X{traceId}] %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 2. Creas un AsyncAppender que envuelve al CONSOLE -->
+    <appender name="ASYNC_CONSOLE" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="CONSOLE" />
+        <!-- Tamaño de la cola en memoria de logs pendientes -->
+        <queueSize>512</queueSize>
+        <!-- Mantener todos los logs (0 = no descartar TRACE/DEBUG cuando la cola se llene) -->
+        <discardingThreshold>0</discardingThreshold>
+        <!-- Incluir información del invocador (caller data) solo si es indispensable -->
+        <includeCallerData>false</includeCallerData>
+    </appender>
+
+    <!-- 3. Apuntas el logger raíz al appender ASÍNCRONO, no al CONSOLE directo -->
+    <root level="INFO">
+        <appender-ref ref="ASYNC_CONSOLE" />
+    </root>
+</configuration>
