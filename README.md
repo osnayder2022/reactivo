@@ -28,3 +28,11 @@ Se debe crear la base de datos antes de ejecutar la aplicación, ya que Flyway s
 La base de datos a crear debe tener el nombre de: my_database
 
 Cuenta con middleware para el manejo de errores, lo que permite capturar y manejar las excepciones de manera centralizada, proporcionando respuestas adecuadas a los clientes y mejorando la experiencia del usuario.
+
+
+
+
+Para iniciar proyecto
+mvn spring-boot:run -Dspring-boot.run.profiles=dev
+
+java -jar target/tu-aplicacion-0.0.1-SNAPSHOT.jar --spring.profiles.active=dev
